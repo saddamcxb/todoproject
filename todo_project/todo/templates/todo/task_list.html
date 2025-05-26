@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}
+Task List
+{% endblock %}
+
+{% block content %}
+<h2 class="mb-3">My Tasks</h2>
+
+<a href="{% url 'task_create' %}" class="btn btn-success mb-3">+ Add Task</a>
+<ul class="list-group">
+    {% for task in tasks %}
+    <li class="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+            <strong>{{task.title}}</strong>
+            {% if task.completed %}
+            <span class="badge bg-success ms-2">Completed</span>
+            {% endif %}
+            <p class="mb-0 text-muted">{{ task.description }}</p>
+        </div>
+
+        <div>
+            <a href="{% url 'task_update' task.id %}" class="btn btn-sm btn-primary">Edit</a>
+            <a href="{% url 'task_delete' task.id %}" class="btn btn-sm btn-danger">Delete</a>
+        </div>
+    </li>
+    {% empty %}
+    <li class="list-group-item">No tasks yet.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
